@@ -15,7 +15,7 @@ namespace NanoDNA.CLIFramework.Data
         public Setting Settings { get; }
 
         /// <summary>
-        /// The Current Working Directory the <see cref="CLIApplication"/> is ran from
+        /// The Current Working Directory the <see cref="CLIApplication{S, DM}"/> is ran from
         /// </summary>
         public string CWD { get; }
 
@@ -25,7 +25,7 @@ namespace NanoDNA.CLIFramework.Data
         public string CWDCachePath { get; }
 
         /// <summary>
-        /// Dictionary of Command Flags, Stores all available Flags in the <see cref="CLIApplication"/>
+        /// Dictionary of Command Flags, Stores all available Flags in the <see cref="CLIApplication{S, DM}"/>
         /// </summary>
         public Dictionary<Type, Flag> GlobalFlags { get; }
     }

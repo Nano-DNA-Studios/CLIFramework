@@ -7,32 +7,35 @@ namespace NanoDNA.CLIFramework
     /// <summary>
     /// Base Class for a CLI Application
     /// </summary>
-    public abstract class CLIApplication
+    public abstract class CLIApplication<S, DM> where S : Setting, new() where DM : DataManager
     {
         /// <summary>
-        /// Name of the <see cref="CLIApplication"/>
+        /// Name of the <see cref="CLIApplication{S, DM}"/>
         /// </summary>
         public abstract string Name { get; }
 
         /// <summary>
-        /// The <see cref="CLIApplication"/>'s DataManager, manages the data and state of the application.
+        /// The <see cref="CLIApplication{S, DM}"/>'s Settings, used to manage the settings of the application.
         /// </summary>
-        public static IDataManager DataManager { get; private set; }
+        public static S Settings { get; private set; }
 
         /// <summary>
-        /// The <see cref="CLIApplication"/>'s CommandHandler, handles the commands and arguments passed to the application's Commands.
+        /// The <see cref="CLIApplication{S, DM}"/>'s DataManager, manages the data and state of the application.
+        /// </summary>
+        public static DM DataManager { get; private set; }
+
+        /// <summary>
+        /// The <see cref="CLIApplication{S, DM}"/>'s CommandHandler, handles the commands and arguments passed to the application's Commands.
         /// </summary>
         public ArgumentHandler ArgumentHandler { get; private set; }
 
         /// <summary>
-        /// Initializes a new Instance of a <see cref="CLIApplication"/>.
+        /// Initializes a new Instance of a <see cref="CLIApplication{S, DM}"/>.
         /// </summary>
-        /// <param name="dataManager"><see cref="IDataManager"/> to use to manager Application Data</param>
-        /// <param name="commandHandler">Command Handler type to take care of </param>
-        public CLIApplication (IDataManager dataManager, ArgumentHandler commandHandler)
+        public CLIApplication()
         {
-            DataManager = dataManager;
-            ArgumentHandler = commandHandler;
+            Settings = new S();
+            ArgumentHandler = new ArgumentHandler(Settings);
         }
 
         /// <summary>
@@ -46,6 +49,7 @@ namespace NanoDNA.CLIFramework
                 throw new Exception("Command Handler is null");
 
             ArgumentHandler.HandleArgs(args);
+            DataManager = Activator.CreateInstance(typeof(DM), Settings, ArgumentHandler.GlobalFlags) as DM;
 
             Command command = CommandFactory.GetCommand(ArgumentHandler.CommandName);
 

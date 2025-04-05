@@ -7,7 +7,7 @@ using System.Linq;
 namespace NanoDNA.CLIFramework.Data
 {
     /// <summary>
-    /// Defines the Base DataManager and Stores info related to the <see cref="CLIApplication"/>.
+    /// Defines the Base DataManager and Stores info related to the <see cref="CLIApplication{S, DM}"/>.
     /// </summary>
     public abstract class DataManager : IDataManager
     {

@@ -9,7 +9,7 @@ namespace NanoDNA.CLIFramework.Commands
     /// <summary>
     /// Defines the Base Command Handler, handles parsing of CLI Arguments and Routes to the appropriate Command Class.
     /// </summary>
-    public abstract class ArgumentHandler
+    public class ArgumentHandler
     {
         /// <summary>
         /// Global Flags preceding the Command Name, applies an application wide modifier to the command.
@@ -29,12 +29,13 @@ namespace NanoDNA.CLIFramework.Commands
         /// <summary>
         /// CLI Applications Settings, stores the Flag Prefixes and other settings.
         /// </summary>
-        private Setting Settings { get; }
+        private ISetting Settings { get; }
 
         /// <summary>
         /// Initializes a new Instance of a <see cref="ArgumentHandler"/>.
         /// </summary>
-        public ArgumentHandler(Setting settings)
+        /// <param name="settings">CLI Applications Settings to use</param>
+        public ArgumentHandler(ISetting settings)
         {
             Settings = settings;
             GlobalFlags = new Dictionary<Type, Flag>();
@@ -159,7 +160,7 @@ namespace NanoDNA.CLIFramework.Commands
         }
 
         /// <summary>
-        /// Checks if the Global Flag Argument exists in the <see cref="CLIApplication"/>.
+        /// Checks if the Global Flag Argument exists in the <see cref="CLIApplication{S, DM}"/>.
         /// </summary>
         /// <param name="flagArg">Flag Argument to verify</param>
         /// <returns>True if it is a valid Global Flag, False otherwise</returns>
