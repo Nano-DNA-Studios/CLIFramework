@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NanoDNA.CLIFramework.Commands
 {
-    internal class Command : ICommand
+    /// <summary>
+    /// Base Abstract Class for Defining a CLI Command.
+    /// </summary>
+    public abstract class Command : ICommand
     {
-        public string Name => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public abstract string Name { get; }
 
-        public string Description => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public abstract string Description { get; }
 
-        public void Execute(string[] args)
-        {
-            throw new NotImplementedException();
-        }
+        /// <inheritdoc/>
+        public abstract void Execute(string[] args);
     }
 }

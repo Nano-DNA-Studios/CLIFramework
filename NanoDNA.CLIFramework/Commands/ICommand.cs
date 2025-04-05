@@ -1,6 +1,9 @@
 ﻿
 namespace NanoDNA.CLIFramework.Commands
 {
+    /// <summary>
+    /// Interface for Commands that are Executed in the CLI Application.
+    /// </summary>
     internal interface ICommand
     {
         /// <summary>

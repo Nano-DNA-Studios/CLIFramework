@@ -22,29 +22,34 @@ namespace NanoDNA.CLIFramework
         /// <summary>
         /// The <see cref="CLIApplication"/>'s CommandHandler, handles the commands and arguments passed to the application's Commands.
         /// </summary>
-        public CommandHandler CommandHandler { get; private set; }
+        public ArgumentHandler ArgumentHandler { get; private set; }
 
         /// <summary>
         /// Initializes a new Instance of a <see cref="CLIApplication"/>.
         /// </summary>
         /// <param name="dataManager"><see cref="IDataManager"/> to use to manager Application Data</param>
         /// <param name="commandHandler">Command Handler type to take care of </param>
-        public CLIApplication (IDataManager dataManager, CommandHandler commandHandler)
+        public CLIApplication (IDataManager dataManager, ArgumentHandler commandHandler)
         {
             DataManager = dataManager;
-            CommandHandler = commandHandler;
+            ArgumentHandler = commandHandler;
         }
 
+        /// <summary>
+        /// Runs the CLI Application by passing Arguments to the Command Handler to route it to the Command.
+        /// </summary>
+        /// <param name="args">CLI Arguments Inputted</param>
+        /// <exception cref="Exception">thrown if the Command Handler is Undefined</exception>
         public void Run(string[] args)
         {
-            if (CommandHandler == null)
+            if (ArgumentHandler == null)
                 throw new Exception("Command Handler is null");
 
-            CommandHandler.HandleCommand(args);
+            ArgumentHandler.HandleArgs(args);
+
+            Command command = CommandFactory.GetCommand(ArgumentHandler.CommandName);
+
+            command.Execute(ArgumentHandler.CommandArgs);
         }
-
-
-
-
     }
 }

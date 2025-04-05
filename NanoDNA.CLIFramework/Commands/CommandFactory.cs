@@ -56,11 +56,11 @@ namespace NanoDNA.CLIFramework.Commands
         /// Tries Adds a Command to the Dictionary of Available Commands.
         /// </summary>
         /// <param name="commandType">The Type of the Valid Command to try and add</param>
-        private static void TryAddCommand (Type commandType)
+        private static void TryAddCommand(Type commandType)
         {
             try
             {
-                Command? flag = (Command?)Activator.CreateInstance(commandType);
+                Command flag = (Command)Activator.CreateInstance(commandType);
 
                 if (flag == null)
                     return;
@@ -75,9 +75,33 @@ namespace NanoDNA.CLIFramework.Commands
             }
         }
 
+        /// <summary>
+        /// Checks if a Command exists in the CLI Application.
+        /// </summary>
+        /// <param name="commandIdentifier"></param>
+        /// <returns></returns>
         public static bool CommandExists(string commandIdentifier)
         {
             return _commands.ContainsKey(commandIdentifier);
+        }
+
+        /// <summary>
+        /// Gets a new Initialized Instance of a Command based on it's name.
+        /// </summary>
+        /// <param name="commandName">Name of the Command to Initialize</param>
+        /// <returns>New Instance of the Specified Command</returns>
+        /// <exception cref="Exception">Thrown if the Command Name doesn't exist in the CLI Application</exception>
+        public static Command GetCommand(string commandName)
+        {
+            string commandNameLower = commandName.ToLower();
+
+            if (_commands.TryGetValue(commandNameLower, out Type commandType))
+            {
+                if (commandType != null)
+                    return Activator.CreateInstance(commandType) as Command;
+            }
+
+            throw new Exception($"Command \"{commandName}\" does not exist.");
         }
     }
 }

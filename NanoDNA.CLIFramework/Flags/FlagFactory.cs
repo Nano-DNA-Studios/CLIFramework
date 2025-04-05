@@ -6,12 +6,24 @@ using System.Reflection;
 
 namespace NanoDNA.CLIFramework.Flags
 {
+    /// <summary>
+    /// Factory Class for Creating and Managing Flag Instances in the CLI Application.
+    /// </summary>
     public static class FlagFactory
     {
+        /// <summary>
+        /// Dictionary of Flags that are available in the CLI.
+        /// </summary>
         private static Dictionary<string, Type> _flags;
 
+        /// <summary>
+        /// Dictionary of Shorthand Flags that are available in the CLI.
+        /// </summary>
         private static Dictionary<string, Type> _shorthandFlags;
 
+        /// <summary>
+        /// Initializes a new Instance of a <see cref="FlagFactory"/> on Program Start.
+        /// </summary>
         static FlagFactory ()
         {
             _flags = new Dictionary<string, Type>();
@@ -20,6 +32,9 @@ namespace NanoDNA.CLIFramework.Flags
             LoadFlags();
         }
 
+        /// <summary>
+        /// Loads all the Available Flags from the Assemblies associated with the CLI Application.
+        /// </summary>
         public static void LoadFlags()
         {
             string currentAssemblyName = Assembly.GetExecutingAssembly().GetName().Name;
@@ -43,11 +58,15 @@ namespace NanoDNA.CLIFramework.Flags
             }
         }
 
+        /// <summary>
+        /// Tries to Add a Flag to the Dictionary of Available Flags.
+        /// </summary>
+        /// <param name="flagType">Type of the Flag to add</param>
         private static void AddFlag (Type flagType)
         {
             try
             {
-                Flag? flag = (Flag?)Activator.CreateInstance(flagType);
+                Flag flag = (Flag)Activator.CreateInstance(flagType);
 
                 if (flag == null)
                     return;
@@ -62,10 +81,40 @@ namespace NanoDNA.CLIFramework.Flags
             }
         }
 
+        /// <summary>
+        /// Checks if the Flag identifier Maps to an existing Flag in the CLI Application.
+        /// </summary>
+        /// <param name="flagIdentifier">Flag Identifier to check</param>
+        /// <returns>True if the identifier maps to a Flag, False otherwise</returns>
         public static bool FlagExists (string flagIdentifier)
         {
             return _flags.ContainsKey(flagIdentifier) || _shorthandFlags.ContainsKey(flagIdentifier);
         }
 
+        /// <summary>
+        /// Creates a new Instance of a Flag based on the Flag Identifier and Arguments provided.
+        /// </summary>
+        /// <param name="flagIdentifier"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static Flag GetFlag(string flagIdentifier, string[] args)
+        {
+            string flagNameLower = flagIdentifier.ToLower();
+
+            if (_flags.TryGetValue(flagNameLower, out Type flagType))
+            {
+                if (flagType != null)
+                    return Activator.CreateInstance(flagType, [args]) as Flag;
+            }
+
+            if (_flags.TryGetValue(flagNameLower, out Type flagShorthandType))
+            {
+                if (flagShorthandType != null)
+                    return Activator.CreateInstance(flagShorthandType, [args]) as Flag;
+            }
+
+            throw new Exception($"Flag \"{flagIdentifier}\" does not exist.");
+        }
     }
 }

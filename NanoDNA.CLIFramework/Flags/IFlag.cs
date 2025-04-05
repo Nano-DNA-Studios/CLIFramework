@@ -20,5 +20,10 @@ namespace NanoDNA.CLIFramework.Flags
         /// Description of the Flag, used to describe the Flag in the CLI. Displayed when the user calls the help command.
         /// </summary>
         public string Description { get; }
+
+        /// <summary>
+        /// Arguments Associated with the Flag. These are the Arguments that are passed to the Flag when it is called in the CLI.
+        /// </summary>
+        public string[] Arguments { get; }
     }
 }
