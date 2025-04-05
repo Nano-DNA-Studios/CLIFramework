@@ -35,7 +35,7 @@ namespace NanoDNA.CLIFramework.Data
         /// <inheritdoc/>
         public Dictionary<string, Flag> ApplicationFlags { get; protected set; }
 
-        public Flag[] GlobalFlags { get; protected set; }
+        public string[] GlobalFlags { get; protected set; }
 
         /// <summary>
         /// Initializes a new Instance of a <see cref="DataManager"/>.
@@ -57,6 +57,14 @@ namespace NanoDNA.CLIFramework.Data
         public bool HasFlag<T>() where T : Flag
         {
             return GlobalFlags.Any(x => x.GetType() == typeof(T));
+        }
+
+        public void SetGlobalFlag(string flag)
+        {
+            if (GlobalFlags == null)
+                GlobalFlags = new string[] { flag };
+            else
+                GlobalFlags = GlobalFlags.Append(flag).ToArray();
         }
 
 

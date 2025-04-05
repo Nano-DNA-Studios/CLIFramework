@@ -6,11 +6,19 @@ using System.Reflection;
 
 namespace NanoDNA.CLIFramework.Commands
 {
+    /// <summary>
+    /// Factory for creating and managing Command Instances in the CLI Application.
+    /// </summary>
     internal class CommandFactory
     {
+        /// <summary>
+        /// Dictionary of Commands that are available in the CLI.
+        /// </summary>
         private static Dictionary<string, Type> _commands;
 
-
+        /// <summary>
+        /// Initializes a new Static Instance of a <see cref="CommandFactory"/>.
+        /// </summary>
         static CommandFactory()
         {
             _commands = new Dictionary<string, Type>();
@@ -18,6 +26,9 @@ namespace NanoDNA.CLIFramework.Commands
             LoadCommands();
         }
 
+        /// <summary>
+        /// Loads all the Commands that are available in the assemblies associated with the CLI Application.
+        /// </summary>
         public static void LoadCommands()
         {
             string currentAssemblyName = Assembly.GetExecutingAssembly().GetName().Name;
@@ -36,12 +47,16 @@ namespace NanoDNA.CLIFramework.Commands
                     if (!type.IsSubclassOf(typeof(Command)) || type.IsAbstract)
                         continue;
 
-                    AddCommand(type);
+                    TryAddCommand(type);
                 }
             }
         }
 
-        private static void AddCommand (Type commandType)
+        /// <summary>
+        /// Tries Adds a Command to the Dictionary of Available Commands.
+        /// </summary>
+        /// <param name="commandType">The Type of the Valid Command to try and add</param>
+        private static void TryAddCommand (Type commandType)
         {
             try
             {
@@ -60,13 +75,9 @@ namespace NanoDNA.CLIFramework.Commands
             }
         }
 
-
-
-
-
-
-
-
-
+        public static bool CommandExists(string commandIdentifier)
+        {
+            return _commands.ContainsKey(commandIdentifier);
+        }
     }
 }
