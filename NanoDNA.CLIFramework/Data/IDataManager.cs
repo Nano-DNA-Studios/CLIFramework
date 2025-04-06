@@ -28,5 +28,12 @@ namespace NanoDNA.CLIFramework.Data
         /// Dictionary of Command Flags, Stores all available Flags in the <see cref="CLIApplication{S, DM}"/>
         /// </summary>
         public Dictionary<Type, Flag> GlobalFlags { get; }
+
+        /// <summary>
+        /// Checks if a Global Flag has been specified in the CLI Arguments.
+        /// </summary>
+        /// <typeparam name="T">Flag Class Instance Type</typeparam>
+        /// <returns>True if the Global Flag had been indicated, False otherwise</returns>
+        public bool HasFlag<T>() where T : Flag;
     }
 }

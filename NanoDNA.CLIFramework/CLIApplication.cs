@@ -1,6 +1,8 @@
 ﻿using NanoDNA.CLIFramework.Data;
 using NanoDNA.CLIFramework.Commands;
 using System;
+using NanoDNA.CLIFramework.Flags;
+using Newtonsoft.Json;
 
 namespace NanoDNA.CLIFramework
 {
@@ -12,17 +14,17 @@ namespace NanoDNA.CLIFramework
         /// <summary>
         /// Name of the <see cref="CLIApplication{S, DM}"/>
         /// </summary>
-        public abstract string Name { get; }
+        public string Name { get => Settings.ApplicationName; }
 
         /// <summary>
         /// The <see cref="CLIApplication{S, DM}"/>'s Settings, used to manage the settings of the application.
         /// </summary>
-        public static S Settings { get; private set; }
+        public S Settings { get; private set; }
 
         /// <summary>
         /// The <see cref="CLIApplication{S, DM}"/>'s DataManager, manages the data and state of the application.
         /// </summary>
-        public static DM DataManager { get; private set; }
+        public DM DataManager { get; private set; }
 
         /// <summary>
         /// The <see cref="CLIApplication{S, DM}"/>'s CommandHandler, handles the commands and arguments passed to the application's Commands.
@@ -36,6 +38,8 @@ namespace NanoDNA.CLIFramework
         {
             Settings = new S();
             ArgumentHandler = new ArgumentHandler(Settings);
+
+            FlagFactory.LoadFlags();
         }
 
         /// <summary>
@@ -49,9 +53,11 @@ namespace NanoDNA.CLIFramework
                 throw new Exception("Command Handler is null");
 
             ArgumentHandler.HandleArgs(args);
-            DataManager = Activator.CreateInstance(typeof(DM), Settings, ArgumentHandler.GlobalFlags) as DM;
+            DataManager = (DM)Activator.CreateInstance(typeof(DM), new object[] { Settings, ArgumentHandler.GlobalFlags });
 
-            Command command = CommandFactory.GetCommand(ArgumentHandler.CommandName);
+            //Console.WriteLine(JsonConvert.SerializeObject(DataManager, Formatting.Indented));
+
+            Command command = CommandFactory.GetCommand(ArgumentHandler.CommandName, DataManager);
 
             command.Execute(ArgumentHandler.CommandArgs);
         }

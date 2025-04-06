@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NanoDNA.CLIFramework.Data;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -60,7 +62,7 @@ namespace NanoDNA.CLIFramework.Commands
         {
             try
             {
-                Command flag = (Command)Activator.CreateInstance(commandType);
+                Command flag = (Command)Activator.CreateInstance(commandType, new object[] { null }); ;
 
                 if (flag == null)
                     return;
@@ -89,16 +91,17 @@ namespace NanoDNA.CLIFramework.Commands
         /// Gets a new Initialized Instance of a Command based on it's name.
         /// </summary>
         /// <param name="commandName">Name of the Command to Initialize</param>
+        /// <param name="dataManager">Instance of the Data Manager to pass to the Command</param>
         /// <returns>New Instance of the Specified Command</returns>
         /// <exception cref="Exception">Thrown if the Command Name doesn't exist in the CLI Application</exception>
-        public static Command GetCommand(string commandName)
+        public static Command GetCommand(string commandName, DataManager dataManager)
         {
             string commandNameLower = commandName.ToLower();
 
             if (_commands.TryGetValue(commandNameLower, out Type commandType))
             {
                 if (commandType != null)
-                    return Activator.CreateInstance(commandType) as Command;
+                    return Activator.CreateInstance(commandType, new object[] { dataManager }) as Command;
             }
 
             throw new Exception($"Command \"{commandName}\" does not exist.");

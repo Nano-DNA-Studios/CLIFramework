@@ -27,6 +27,11 @@ namespace NanoDNA.CLIFramework.Commands
         public string[] CommandArgs { get; protected set; }
 
         /// <summary>
+        /// Index in the Args at which the Command Name was found.
+        /// </summary>
+        private int CommandIndex { get; set; }
+
+        /// <summary>
         /// CLI Applications Settings, stores the Flag Prefixes and other settings.
         /// </summary>
         private ISetting Settings { get; }
@@ -49,9 +54,19 @@ namespace NanoDNA.CLIFramework.Commands
         /// <param name="args">CLI Arguments inputted</param>
         public void HandleArgs(string[] args)
         {
-            int commandIndex = 0;
-
             for (int i = 0; i < args.Length; i++)
+            {
+                string arg = args[i];
+
+                if (CommandFactory.CommandExists(arg))
+                {
+                    CommandIndex = i;
+                    CommandName = arg;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < CommandIndex; i++)
             {
                 string arg = args[i];
 
@@ -60,16 +75,9 @@ namespace NanoDNA.CLIFramework.Commands
                     AddFlag(ref i, args);
                     continue;
                 }
-
-                if (CommandFactory.CommandExists(arg))
-                {
-                    commandIndex = i;
-                    CommandName = arg;
-                    break;
-                }
             }
 
-            CommandArgs = args.TakeLast(args.Length - commandIndex).ToArray();
+            CommandArgs = args.TakeLast(args.Length - CommandIndex).ToArray();
         }
 
         /// <summary>
@@ -82,7 +90,7 @@ namespace NanoDNA.CLIFramework.Commands
             string flagIdentifier = GetFlagIdentifier(args[index]);
             List<string> flagArgs = new List<string>();
 
-            for (int j = index + 1; j < args.Length; j++)
+            for (int j = index + 1; j < CommandIndex; j++)
             {
                 string nextArg = args[j];
 
@@ -97,19 +105,6 @@ namespace NanoDNA.CLIFramework.Commands
             GlobalFlags.Add(flag.GetType(), flag);
 
             index += flagArgs.Count;
-        }
-
-        /// <summary>
-        /// Handles the Command to Run
-        /// </summary>
-        /// <param name="args">CLI Arguments Inputted</param>
-        private void HandleCommand(string[] args)
-        {
-            HandleArgs(args);
-
-            Command command = CommandFactory.GetCommand(CommandName);
-
-            command.Execute(CommandArgs);
         }
 
         /// <summary>
@@ -173,7 +168,7 @@ namespace NanoDNA.CLIFramework.Commands
             string flag = IsGlobalFlag(flagArg) ? flagArg.Replace(Settings.GlobalFlagPrefix, "").Trim() : flagArg.Replace(Settings.GlobalShorthandFlagPrefix, "").Trim();
 
             if (!FlagFactory.FlagExists(flag))
-                throw new Exception($"Flag {flag} does not exist.");
+                throw new Exception($"Flag \"{flag}\" does not exist.");
 
             return true;
         }

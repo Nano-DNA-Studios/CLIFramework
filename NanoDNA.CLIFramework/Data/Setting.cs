@@ -8,25 +8,35 @@ namespace NanoDNA.CLIFramework.Data
     /// </summary>
     public abstract class Setting : ISetting
     {
+        /// <summary>
+        /// The Default Global Flag Prefix for the <see cref="CLIApplication{S, DM}"/>. Used by most CLI Applications.
+        /// </summary>
+        protected const string DEFAULT_GLOBAL_FLAG_PREFIX = "--";
+
+        /// <summary>
+        /// The Default Global Shorthand Flag Prefix for the <see cref="CLIApplication{S, DM}"/>.. Used by most CLI Applications.
+        /// </summary>
+        protected const string DEFAULT_GLOBAL_SHORTHAND_FLAG_PREFIX = "-";
+
         /// <inheritdoc/>
         public abstract string ApplicationName { get; }
 
         /// <inheritdoc/>
-        public abstract string ApplicationPath { get; protected set; }
+        public string ApplicationPath { get; }
 
         /// <inheritdoc/>
-        public string GlobalFlagPrefix { get; } = "--";
+        public abstract string GlobalFlagPrefix { get; }
 
         /// <inheritdoc/>
-        public string GlobalShorthandFlagPrefix { get; } = "-";
+        public abstract string GlobalShorthandFlagPrefix { get; }
 
         /// <inheritdoc/>
-        public abstract string CachePath { get; protected set; }
+        public string CachePath { get; protected set; }
 
         /// <summary>
         /// Initializes a new Instance of a <see cref="Setting"/>.
         /// </summary>
-        public Setting ()
+        public Setting()
         {
             ApplicationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             CachePath = Path.Combine(ApplicationPath, "Cache");
