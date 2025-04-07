@@ -57,7 +57,10 @@ namespace NanoDNA.CLIFramework.Tests.Tests
 
                 string result = sw.ToString().Trim();
 
-                Assert.That(result, Is.EqualTo("Hello World!\r\nVERBOSE!"), "Command should output \"Hello World!\"");
+                if (OperatingSystem.IsWindows())
+                    Assert.That(result, Is.EqualTo("Hello World!\r\nVERBOSE!"), "Command should output \"Hello World!\"");
+                else
+                    Assert.That(result, Is.EqualTo("Hello World!\nVERBOSE!"), "Command should output \"Hello World!\"");
             }
 
             using (StringWriter sw = new StringWriter())
@@ -70,7 +73,10 @@ namespace NanoDNA.CLIFramework.Tests.Tests
 
                 string result = sw.ToString().Trim();
 
-                Assert.That(result, Is.EqualTo("Hello World!\r\nVERBOSE!\r\nNON-VERBOSE!"), "Command should output \"Hello World!\"");
+                if (OperatingSystem.IsWindows())
+                    Assert.That(result, Is.EqualTo("Hello World!\r\nVERBOSE!\r\nNON-VERBOSE!"), "Command should output \"Hello World!\"");
+                else
+                    Assert.That(result, Is.EqualTo("Hello World!\nVERBOSE!\nNON-VERBOSE!"), "Command should output \"Hello World!\"");
             }
         }
 
