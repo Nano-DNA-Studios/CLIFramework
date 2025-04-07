@@ -1,5 +1,4 @@
 ﻿using NanoDNA.CLIFramework.Data;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +10,7 @@ namespace NanoDNA.CLIFramework.Commands
     /// <summary>
     /// Factory for creating and managing Command Instances in the CLI Application.
     /// </summary>
-    internal class CommandFactory
+    public static class CommandFactory
     {
         /// <summary>
         /// Dictionary of Commands that are available in the CLI.
@@ -24,8 +23,6 @@ namespace NanoDNA.CLIFramework.Commands
         static CommandFactory()
         {
             _commands = new Dictionary<string, Type>();
-
-            LoadCommands();
         }
 
         /// <summary>
@@ -80,8 +77,8 @@ namespace NanoDNA.CLIFramework.Commands
         /// <summary>
         /// Checks if a Command exists in the CLI Application.
         /// </summary>
-        /// <param name="commandIdentifier"></param>
-        /// <returns></returns>
+        /// <param name="commandIdentifier">Identifer for the Command (Name of the Command)</param>
+        /// <returns>True if the Command has is loaded and exists, False otherwise</returns>
         public static bool CommandExists(string commandIdentifier)
         {
             return _commands.ContainsKey(commandIdentifier);

@@ -40,6 +40,7 @@ namespace NanoDNA.CLIFramework
             ArgumentHandler = new ArgumentHandler(Settings);
 
             FlagFactory.LoadFlags();
+            CommandFactory.LoadCommands();
         }
 
         /// <summary>
@@ -54,8 +55,6 @@ namespace NanoDNA.CLIFramework
 
             ArgumentHandler.HandleArgs(args);
             DataManager = (DM)Activator.CreateInstance(typeof(DM), new object[] { Settings, ArgumentHandler.GlobalFlags });
-
-            //Console.WriteLine(JsonConvert.SerializeObject(DataManager, Formatting.Indented));
 
             Command command = CommandFactory.GetCommand(ArgumentHandler.CommandName, DataManager);
 

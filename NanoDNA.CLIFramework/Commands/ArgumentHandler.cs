@@ -77,7 +77,7 @@ namespace NanoDNA.CLIFramework.Commands
                 }
             }
 
-            CommandArgs = args.TakeLast(args.Length - CommandIndex).ToArray();
+            CommandArgs = args.TakeLast(args.Length - 1 - CommandIndex).ToArray();
         }
 
         /// <summary>

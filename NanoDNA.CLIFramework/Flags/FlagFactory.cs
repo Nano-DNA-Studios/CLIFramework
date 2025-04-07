@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -29,8 +28,6 @@ namespace NanoDNA.CLIFramework.Flags
         {
             _flags = new Dictionary<string, Type>();
             _shorthandFlags = new Dictionary<string, Type>();
-
-            //LoadFlags();
         }
 
         /// <summary>
@@ -109,7 +106,7 @@ namespace NanoDNA.CLIFramework.Flags
                     return Activator.CreateInstance(flagType, [args]) as Flag;
             }
 
-            if (_flags.TryGetValue(flagNameLower, out Type flagShorthandType))
+            if (_shorthandFlags.TryGetValue(flagNameLower, out Type flagShorthandType))
             {
                 if (flagShorthandType != null)
                     return Activator.CreateInstance(flagShorthandType, [args]) as Flag;

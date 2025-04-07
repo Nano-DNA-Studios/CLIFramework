@@ -11,12 +11,12 @@ namespace NanoDNA.CLIFramework.Data
         /// <summary>
         /// The Default Global Flag Prefix for the <see cref="CLIApplication{S, DM}"/>. Used by most CLI Applications.
         /// </summary>
-        protected const string DEFAULT_GLOBAL_FLAG_PREFIX = "--";
+        public const string DEFAULT_GLOBAL_FLAG_PREFIX = "--";
 
         /// <summary>
         /// The Default Global Shorthand Flag Prefix for the <see cref="CLIApplication{S, DM}"/>.. Used by most CLI Applications.
         /// </summary>
-        protected const string DEFAULT_GLOBAL_SHORTHAND_FLAG_PREFIX = "-";
+        public const string DEFAULT_GLOBAL_SHORTHAND_FLAG_PREFIX = "-";
 
         /// <inheritdoc/>
         public abstract string ApplicationName { get; }
