@@ -1,8 +1,7 @@
-﻿using NanoDNA.CLIFramework.Data;
-using NanoDNA.CLIFramework.Commands;
-using System;
+﻿using System;
+using NanoDNA.CLIFramework.Data;
 using NanoDNA.CLIFramework.Flags;
-using Newtonsoft.Json;
+using NanoDNA.CLIFramework.Commands;
 
 namespace NanoDNA.CLIFramework
 {

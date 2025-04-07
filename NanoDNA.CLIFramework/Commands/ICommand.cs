@@ -1,5 +1,4 @@
-﻿
-using NanoDNA.CLIFramework.Data;
+﻿using NanoDNA.CLIFramework.Data;
 using NanoDNA.CLIFramework.Flags;
 
 namespace NanoDNA.CLIFramework.Commands

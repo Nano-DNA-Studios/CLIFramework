@@ -1,6 +1,6 @@
-﻿using NanoDNA.CLIFramework.Data;
+﻿using System.Linq;
+using NanoDNA.CLIFramework.Data;
 using NanoDNA.CLIFramework.Flags;
-using System.Linq;
 
 namespace NanoDNA.CLIFramework.Commands
 {

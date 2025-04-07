@@ -1,9 +1,9 @@
-﻿using NanoDNA.CLIFramework.Commands;
-using NanoDNA.CLIFramework.Flags;
-using NanoDNA.CLIFramework.Tests.Application;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Linq;
+using NUnit.Framework;
+using NanoDNA.CLIFramework.Flags;
+using NanoDNA.CLIFramework.Commands;
+using NanoDNA.CLIFramework.Tests.Application;
 
 namespace NanoDNA.CLIFramework.Tests.Tests
 {

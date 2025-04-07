@@ -1,6 +1,6 @@
-﻿using NanoDNA.CLIFramework.Data;
+﻿using System;
+using NanoDNA.CLIFramework.Data;
 using NanoDNA.CLIFramework.Flags;
-using System;
 using System.Collections.Generic;
 
 namespace NanoDNA.CLIFramework.Tests.Application

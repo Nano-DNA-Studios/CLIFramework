@@ -1,5 +1,5 @@
-﻿using NanoDNA.CLIFramework.Flags;
-using System;
+﻿using System;
+using NanoDNA.CLIFramework.Flags;
 using System.Collections.Generic;
 
 namespace NanoDNA.CLIFramework.Data

@@ -1,7 +1,7 @@
-﻿using NanoDNA.CLIFramework.Tests.Application;
-using NUnit.Framework;
+﻿using System;
 using System.IO;
-using System;
+using NUnit.Framework;
+using NanoDNA.CLIFramework.Tests.Application;
 
 namespace NanoDNA.CLIFramework.Tests.Tests
 {

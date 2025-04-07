@@ -1,6 +1,6 @@
-﻿using NanoDNA.CLIFramework.Commands;
+﻿using System;
 using NanoDNA.CLIFramework.Data;
-using System;
+using NanoDNA.CLIFramework.Commands;
 
 namespace NanoDNA.CLIFramework.Tests.Application
 {

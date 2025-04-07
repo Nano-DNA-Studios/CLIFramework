@@ -1,9 +1,9 @@
-﻿using NanoDNA.CLIFramework.Data;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Diagnostics;
+using NanoDNA.CLIFramework.Data;
+using System.Collections.Generic;
 
 namespace NanoDNA.CLIFramework.Commands
 {
