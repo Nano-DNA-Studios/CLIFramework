@@ -29,6 +29,4 @@
 		<ProjectReference Include="..\NanoDNA.CLIFramework\NanoDNA.CLIFramework.csproj" />
 	</ItemGroup>
 	
-	<!-- Source Code Files -->
-
 </Project>
