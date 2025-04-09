@@ -2,6 +2,7 @@
 using NanoDNA.CLIFramework.Data;
 using NanoDNA.CLIFramework.Flags;
 using NanoDNA.CLIFramework.Commands;
+using Newtonsoft.Json.Linq;
 
 namespace NanoDNA.CLIFramework
 {
@@ -18,7 +19,7 @@ namespace NanoDNA.CLIFramework
         /// <summary>
         /// The <see cref="CLIApplication{S, DM}"/>'s Settings, used to manage the settings of the application.
         /// </summary>
-        public S Settings { get; private set; }
+        public S Settings { get; protected set; }
 
         /// <summary>
         /// The <see cref="CLIApplication{S, DM}"/>'s DataManager, manages the data and state of the application.
@@ -35,7 +36,7 @@ namespace NanoDNA.CLIFramework
         /// </summary>
         public CLIApplication()
         {
-            Settings = new S();
+            Settings = Setting.LoadSettings<S>();
             ArgumentHandler = new ArgumentHandler(Settings);
 
             FlagFactory.LoadFlags();

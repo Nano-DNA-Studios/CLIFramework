@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Newtonsoft.Json;
+using System.IO;
 using System.Reflection;
 
 namespace NanoDNA.CLIFramework.Data
@@ -32,6 +33,9 @@ namespace NanoDNA.CLIFramework.Data
 
         /// <inheritdoc/>
         public string CachePath { get; protected set; }
+        
+        /// <inheritdoc/>
+        public string SettingsPath { get; protected set; }
 
         /// <summary>
         /// Initializes a new Instance of a <see cref="Setting"/>.
@@ -40,9 +44,34 @@ namespace NanoDNA.CLIFramework.Data
         {
             ApplicationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             CachePath = Path.Combine(ApplicationPath, "Cache");
+            SettingsPath = Path.Combine(CachePath, "Settings.json");
 
             if (!Directory.Exists(CachePath))
                 Directory.CreateDirectory(CachePath);
+        }
+
+        /// <inheritdoc/>
+        public static T LoadSettings<T> () where T : Setting, new()
+        {
+            T settings = new T();
+
+            if (!File.Exists(settings.SettingsPath))
+            {
+                File.WriteAllText(settings.SettingsPath, settings.ToString());
+                return settings;
+            }
+            else
+            {
+                string json = File.ReadAllText(settings.SettingsPath);
+                return JsonConvert.DeserializeObject<T>(json);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void SaveSettings()
+        {
+            string json = JsonConvert.SerializeObject(this, Formatting.Indented);
+            File.WriteAllText(SettingsPath, json);
         }
     }
 }

@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System.Reflection;
 using NanoDNA.CLIFramework.Data;
 using NanoDNA.CLIFramework.Tests.Application;
+using System;
 
 namespace NanoDNA.CLIFramework.Tests.Tests
 {
@@ -77,6 +78,32 @@ namespace NanoDNA.CLIFramework.Tests.Tests
         {
             Assert.That(Setting.DEFAULT_GLOBAL_FLAG_PREFIX, Is.EqualTo("--"), "Default Global Flag Prefix should be \"--\"");
             Assert.That(Setting.DEFAULT_GLOBAL_SHORTHAND_FLAG_PREFIX, Is.EqualTo("-"), "Default Global Shorthand Flag Prefix should be \"-\"");
+        }
+
+        /// <summary>
+        /// Tests if the Settings File should exist and be Present
+        /// </summary>
+        [Test]
+        public void SettingsFileExists ()
+        {
+            Assert.That(File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Cache", "Settings.json")), Is.True, "Settings File should exist");
+        }
+
+        [Test]
+        public void SettingsLoadFile ()
+        {
+            UnitTestSettings settings = new UnitTestSettings();
+
+            int randomInt = Random.Shared.Next(0, 100);
+
+            Console.WriteLine($"Random Int: {randomInt}");
+
+            settings.TestInt = randomInt;
+            settings.SaveSettings();
+
+            UnitTestSettings loadedSettings = Setting.LoadSettings<UnitTestSettings>();
+
+            Assert.That(loadedSettings.TestInt, Is.EqualTo(randomInt), "Loaded Settings should be equivalent to the Saved Settings");
         }
     }
 }

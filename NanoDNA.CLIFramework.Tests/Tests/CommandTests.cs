@@ -62,6 +62,8 @@ namespace NanoDNA.CLIFramework.Tests.Tests
 
                 Assert.That(result, Is.EqualTo("Hello World!"), "Command should output \"Hello World!\"");
             }
+
+            Console.SetOut(new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true });
         }
     }
 }
