@@ -47,8 +47,6 @@ namespace NanoDNA.CLIFramework.Tests.Tests
                 Assert.That(result, Is.EqualTo("Hello World!"), "Command should output \"Hello World!\"");
             }
 
-            Console.SetOut(new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true });
-
             using (StringWriter sw = new StringWriter())
             {
                 UnitTestCLI cliApplication = new UnitTestCLI();
@@ -64,8 +62,6 @@ namespace NanoDNA.CLIFramework.Tests.Tests
                 else
                     Assert.That(result, Is.EqualTo("Hello World!\nVERBOSE!"), "Command should output \"Hello World!\"");
             }
-
-            Console.SetOut(new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true });
 
             using (StringWriter sw = new StringWriter())
             {

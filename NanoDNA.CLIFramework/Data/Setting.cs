@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -35,7 +33,7 @@ namespace NanoDNA.CLIFramework.Data
 
         /// <inheritdoc/>
         public string CachePath { get; protected set; }
-        
+
         /// <inheritdoc/>
         public string SettingsPath { get; protected set; }
 
@@ -53,7 +51,7 @@ namespace NanoDNA.CLIFramework.Data
         }
 
         /// <inheritdoc/>
-        public static T LoadSettings<T> () where T : Setting, new()
+        public static T LoadSettings<T>() where T : Setting, new()
         {
             T settings = new T();
 
