@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -48,6 +50,8 @@ namespace NanoDNA.CLIFramework.Data
 
             if (!Directory.Exists(CachePath))
                 Directory.CreateDirectory(CachePath);
+
+            Console.WriteLine($"Cache Path: {CachePath}");
         }
 
         /// <inheritdoc/>
@@ -57,7 +61,7 @@ namespace NanoDNA.CLIFramework.Data
 
             if (!File.Exists(settings.SettingsPath))
             {
-                File.WriteAllText(settings.SettingsPath, settings.ToString());
+                File.WriteAllText(settings.SettingsPath, JsonConvert.SerializeObject(settings, Formatting.Indented));
                 return settings;
             }
             else

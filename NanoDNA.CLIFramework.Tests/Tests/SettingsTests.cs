@@ -89,6 +89,9 @@ namespace NanoDNA.CLIFramework.Tests.Tests
             Assert.That(File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Cache", "Settings.json")), Is.True, "Settings File should exist");
         }
 
+        /// <summary>
+        /// Tests the Loading of the Settings File
+        /// </summary>
         [Test]
         public void SettingsLoadFile ()
         {
