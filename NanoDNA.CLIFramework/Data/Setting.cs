@@ -50,8 +50,6 @@ namespace NanoDNA.CLIFramework.Data
 
             if (!Directory.Exists(CachePath))
                 Directory.CreateDirectory(CachePath);
-
-            Console.WriteLine($"Cache Path: {CachePath}");
         }
 
         /// <inheritdoc/>

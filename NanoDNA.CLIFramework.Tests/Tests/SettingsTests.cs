@@ -99,8 +99,6 @@ namespace NanoDNA.CLIFramework.Tests.Tests
 
             int randomInt = Random.Shared.Next(0, 100);
 
-            Console.WriteLine($"Random Int: {randomInt}");
-
             settings.TestInt = randomInt;
             settings.SaveSettings();
 
