@@ -78,6 +78,8 @@ namespace NanoDNA.CLIFramework.Tests.Tests
                 else
                     Assert.That(result, Is.EqualTo("Hello World!\nVERBOSE!\nNON-VERBOSE!"), "Command should output \"Hello World!\"");
             }
+
+            Console.SetOut(new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true });
         }
 
         /// <summary>
@@ -94,6 +96,8 @@ namespace NanoDNA.CLIFramework.Tests.Tests
 
                 Assert.Throws<Exception>(() => cliApplication.Run(new string[] { "hello" }));
             }
+
+            Console.SetOut(new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true });
         }
     }
 }
