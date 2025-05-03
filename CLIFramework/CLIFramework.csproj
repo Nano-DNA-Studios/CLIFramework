@@ -4,9 +4,11 @@
 	<PropertyGroup>
 		<RootNamespace>NanoDNA.CLIFramework</RootNamespace>
 		<ProductName>$(RootNamespace)</ProductName>
+		<PackageId>$(RootNamespace)</PackageId>
 		<AssemblyName>$(RootNamespace)</AssemblyName>
 		<OutputType>Library</OutputType>
 		<IsPackable>true</IsPackable>
+		<DebugType>embedded</DebugType>
 	</PropertyGroup>
 
 	<!-- Add Individual Platforms in NuGet Package -->
@@ -17,6 +19,19 @@
 	<!-- NuGet Package References -->
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	</ItemGroup>
+
+	<!-- Include Items to Edit -->
+	<ItemGroup>
+		<!-- Project Documents -->
+		<None Include="..\README.md" Link="Docs\README.md" />
+		<None Include="..\Directory.Build.props" Link="Docs\Directory.Build.props" />
+		<None Include="..\LICENSE" Link="Docs\LICENSE" />
+
+		<!-- Workflow Scripts -->
+		<None Include="..\.github\workflows\build.yml" Link="Workflows\build.yml" />
+		<None Include="..\.github\workflows\publish.yml" Link="Workflows\publish.yml" />
+		<None Include="..\.github\workflows\test.yml"  Link="Workflows\test.yml" />
 	</ItemGroup>
 
 </Project>
