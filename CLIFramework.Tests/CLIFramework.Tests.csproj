@@ -26,7 +26,7 @@
 
 	<!-- Project References -->
 	<ItemGroup>
-		<ProjectReference Include="..\NanoDNA.CLIFramework\NanoDNA.CLIFramework.csproj" />
+		<ProjectReference Include="..\CLIFramework\CLIFramework.csproj" />
 	</ItemGroup>
 	
 </Project>
